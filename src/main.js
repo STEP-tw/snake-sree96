@@ -39,10 +39,10 @@ const validateCoords=function (snake) {
 const isEatenItself=function (snake) {
   let head=snake.getHead();
   let body=snake.getBody();
-  let tempList=body.map(function (currentArg) {
+  let hasEatenList=body.filter(function (currentArg) {
     return head.isSameCoordAs(currentArg)}
   );
-  return tempList.includes(true);
+  return hasEatenList.length!=0;
 }
 
 const changeSnakeDirection=function(event) {
