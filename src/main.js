@@ -12,11 +12,34 @@ const animateSnake=function() {
   paintBody(oldHead);
   unpaintSnake(oldTail);
   paintHead(head);
+  isGameOver(snake);
   if(head.isSameCoordAs(food)) {
     snake.grow();
     createFood(numberOfRows,numberOfCols);
     drawFood(food);
   }
+}
+
+const isGameOver=function (snake) {
+  if (validateCoords(snake)) {
+    let gameOverHTMl=`<h3>Game Over</h3><br><h5 onclick="location.reload()">click here to play again</h5>`;
+    document.getElementById('hidden_tail').innerHTML=gameOverHTMl;
+    clearInterval(animator);
+  }
+}
+
+const validateCoords=function (snake) {
+  let headCoord=snake.getHead().getCoord();
+  if (headCoord[0]<0||headCoord[0]>=numberOfCols||headCoord[1]<0||headCoord[1]>=numberOfRows) {
+    return true;
+  }
+  return  isEatenItself(snake);
+}
+
+const isEatenItself=function (snake) {
+  let head=snake.getHead();
+  let body=snake.getBody();
+   console.log(body.includes(head));
 }
 
 const changeSnakeDirection=function(event) {
