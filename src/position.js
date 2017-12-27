@@ -42,7 +42,17 @@ Position.prototype.isSameCoordAs=function(other) {
 Position.prototype.getCoord=function() {
   return [this.x,this.y];
 }
+Position.prototype.getDirection=function() {
+  return this.direction;
+}
 
+Position.prototype.getX=function() {
+  return this.x;
+}
+
+Position.prototype.getY=function() {
+  return this.y;
+}
 const generateRandomPosition=function(maxX,maxY) {
   let x=generateRandomNumberBetween(0,maxX);
   let y=generateRandomNumberBetween(0,maxY);

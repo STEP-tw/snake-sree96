@@ -29,11 +29,30 @@ const isGameOver=function (snake) {
 }
 
 const validateCoords=function (snake) {
-  let headCoord=snake.getHead().getCoord();
-  if (headCoord[0]<0||headCoord[0]>=numberOfCols||headCoord[1]<0||headCoord[1]>=numberOfRows) {
+  if (hasHitAnyEdge(snake)) {
     return true;
   }
   return isEatenItself(snake);
+}
+
+const hasHitAnyEdge=function (snake) {
+  let edgeCaseHandlers={
+    "north":function(head){
+      return head.getY()==0;
+    },
+    "east":function(head){
+      return head.getX()==numberOfCols-1;
+    },
+    "south":function(head){
+      return head.getY()==numberOfRows-1;
+    },
+    "west":function(head){
+      console.log(head.getX());
+      return head.getX()==0 ;
+    }
+  }
+  let head=snake.getHead();
+  return edgeCaseHandlers[head.getDirection()](head);
 }
 
 const isEatenItself=function (snake) {
@@ -87,7 +106,7 @@ const startGame=function() {
   createFood(numberOfRows,numberOfCols);
   drawFood(food);
   addKeyListener();
-  animator=setInterval(animateSnake,140);
+  animator=setInterval(animateSnake,50);
 }
 
 window.onload=startGame;
