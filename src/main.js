@@ -22,8 +22,8 @@ const animateSnake=function() {
 
 const isGameOver=function (snake) {
   if (validateCoords(snake)) {
-    let gameOverHTMl=`<h3>Game Over</h3><br><h5 onclick="location.reload()">click here to play again</h5>`;
-    document.getElementById('hidden_tail').innerHTML=gameOverHTMl;
+    let gameOverHTML=`<h1>Game Over</h1><br><h3 onclick="location.reload()">click here to play again</h3>`;
+    document.getElementById('hidden_tail').innerHTML=gameOverHTML;
     clearInterval(animator);
   }
 }
@@ -33,13 +33,16 @@ const validateCoords=function (snake) {
   if (headCoord[0]<0||headCoord[0]>=numberOfCols||headCoord[1]<0||headCoord[1]>=numberOfRows) {
     return true;
   }
-  return  isEatenItself(snake);
+  return isEatenItself(snake);
 }
 
 const isEatenItself=function (snake) {
   let head=snake.getHead();
   let body=snake.getBody();
-   console.log(body.includes(head));
+  let tempList=body.map(function (currentArg) {
+    return head.isSameCoordAs(currentArg)}
+  );
+  return tempList.includes(true);
 }
 
 const changeSnakeDirection=function(event) {
