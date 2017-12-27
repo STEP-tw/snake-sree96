@@ -15,6 +15,7 @@ const animateSnake=function() {
   isGameOver(snake);
   if(head.isSameCoordAs(food)) {
     snake.grow();
+    debugger;
     createFood(numberOfRows,numberOfCols);
     drawFood(food);
   }
@@ -30,32 +31,34 @@ const isGameOver=function (snake) {
 
 const validateCoords=function (snake) {
   if (hasHitAnyEdge(snake)) {
+    let body=snake.getBody();
+    paintHead(body[body.length-1]);
     return true;
   }
-  return isEatenItself(snake);
+  return hasEatenItself(snake);
 }
 
 const hasHitAnyEdge=function (snake) {
   let edgeCaseHandlers={
     "north":function(head){
-      return head.getY()==0;
+      return head.getY()<0;
     },
     "east":function(head){
-      return head.getX()==numberOfCols-1;
+      return head.getX()==numberOfCols;
     },
     "south":function(head){
-      return head.getY()==numberOfRows-1;
+      return head.getY()==numberOfRows;
     },
     "west":function(head){
       console.log(head.getX());
-      return head.getX()==0 ;
+      return head.getX()<0 ;
     }
   }
   let head=snake.getHead();
   return edgeCaseHandlers[head.getDirection()](head);
 }
 
-const isEatenItself=function (snake) {
+const hasEatenItself=function (snake) {
   let head=snake.getHead();
   let body=snake.getBody();
   let hasEatenList=body.filter(function (currentArg) {
@@ -106,7 +109,7 @@ const startGame=function() {
   createFood(numberOfRows,numberOfCols);
   drawFood(food);
   addKeyListener();
-  animator=setInterval(animateSnake,50);
+  animator=setInterval(animateSnake,140);
 }
 
 window.onload=startGame;
